@@ -4,7 +4,10 @@ var requiest = require('request');
 
 //requests arrive in app with the fbid appended
 app.get('/',function(req,res){
-	var hash = function(){}
+	var hash = function(fbid){
+		return fbid % dbs.length;
+	}
+
 	var dbs = [];
 
 	var db = hash(req.params.fbid);
@@ -18,7 +21,11 @@ app.get('/',function(req,res){
 function adddb(){
 
 }
+
+function rehash(){
+
+}
 //based onfbidea we hash into the array of databases
 //and send the response onward
 
-app.listen('4000');
+app.listen('8080');
