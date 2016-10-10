@@ -25,14 +25,23 @@ app.get('/',function(req,res){
 
 })
 
+//temporary hash function
+function hash(str){
+	var sum = str.split('').reduce(function(previousvalue,currvalue,currindex,array){
+		console.log('prev',previousvalue);
+		console.log(currvalue);
+		return previousvalue + currvalue.charCodeAt(0);
+	},0);
+	return sum % dbs.length;
+}
 
-
-function forward(req,res,next){
+function forwardrequests(req,res,next){
 	//console.log(req.method);
 	var url = dbs[0] + req.url;
 	console.log('url',url);
 	var method = req.method;
 	var data = req.data || {};
+
 	switch(method){
 		case 'GET':
 			axios.get(url).then(function(dbres){
