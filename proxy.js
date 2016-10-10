@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var request = require('request');
-var dbs = ['http://localhost:8888'];
+var dbs = ['http://localhost:8888','http://localhost:8889'];
 var bp = require('body-parser');
 var axios =require('axios')
 
@@ -36,8 +36,9 @@ function hash(str){
 }
 
 function forwardrequests(req,res,next){
-	//console.log(req.method);
-	var url = dbs[0] + req.url;
+	var loginname = "testname";
+	var dbindex = hash(loginname);
+	var url = dbs[dbindex] + req.url;
 	console.log('url',url);
 	var method = req.method;
 	var data = req.data || {};
