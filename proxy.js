@@ -30,8 +30,9 @@ app.get('/',function(req,res){
 function forward(req,res,next){
 	//console.log(req.method);
 	var url = dbs[0] + req.url;
+	console.log('url',url);
 	var method = req.method;
-	var data = {'msg':'hello'};
+	var data = req.data || {};
 	switch(method){
 		case 'GET':
 			axios.get(url).then(function(dbres){
@@ -44,12 +45,12 @@ function forward(req,res,next){
 			})	
 			break;
 		case 'PUT':
-			axios.post(url,data).then(function(dbres){
+			axios.put(url,data).then(function(dbres){
 				res.end(dbres.data)
 			})
 			break;
 		case 'DELETE':
-			axios.post(url,data).then(function(dbres){
+			axios.delete(url).then(function(dbres){
 				res.end(dbres.data)
 			})
 		break;	
