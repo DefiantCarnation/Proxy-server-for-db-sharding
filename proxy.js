@@ -8,7 +8,7 @@ var axios =require('axios')
 app.use(bp.json());
 
 
-app.use(forward)
+app.use(forwardrequests)
 //requests arrive in app with the fbid appended
 app.get('/',function(req,res){
 	var hash = function(fbid){
@@ -28,15 +28,14 @@ app.get('/',function(req,res){
 //temporary hash function
 function hash(str){
 	var sum = str.split('').reduce(function(previousvalue,currvalue,currindex,array){
-		console.log('prev',previousvalue);
-		console.log(currvalue);
 		return previousvalue + currvalue.charCodeAt(0);
 	},0);
+	console.log('HASHED TO DB AT INDEX', sum % dbs.length);
 	return sum % dbs.length;
 }
 
 function forwardrequests(req,res,next){
-	var loginname = "testname";
+	var loginname = "testnamemys";
 	var dbindex = hash(loginname);
 	var url = dbs[dbindex] + req.url;
 	console.log('url',url);
