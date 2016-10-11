@@ -30,12 +30,14 @@ function hash(str){
 	var sum = str.split('').reduce(function(previousvalue,currvalue,currindex,array){
 		return previousvalue + currvalue.charCodeAt(0);
 	},0);
-	console.log('HASHED TO DB AT INDEX', sum % dbs.length);
+	//console.log('HASHED TO DB AT INDEX', sum % dbs.length);
 	return sum % dbs.length;
 }
 
 function forwardrequests(req,res,next){
-	var loginname = "testnamemys";
+	var userid = req.url.split('/')[req.url.split('/').length - 1]
+	var loginname = req.body.username || req.body.userId || req.params.userid || userid;
+	console.log('LoginNameis',loginname);
 	var dbindex = hash(loginname);
 	var url = dbs[dbindex] + req.url;
 	console.log('url',url);
